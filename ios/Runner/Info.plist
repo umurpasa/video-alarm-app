@@ -1,0 +1,59 @@
+<!-- AndroidManifest.xml Permissions -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.video_alarm_app">
+
+    <!-- Basic permissions -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    
+    <!-- For alarms to show on lock screen -->
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
+    
+    <!-- For local video access -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    
+    <!-- For background audio service -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    
+    <application
+        android:label="Video Alarm"
+        android:icon="@mipmap/ic_launcher">
+        
+        <!-- Audio Service -->
+        <service
+            android:name="com.ryanheise.audioservice.AudioService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.media.browse.MediaBrowserService" />
+            </intent-filter>
+        </service>
+        
+        <!-- Boot Receiver for alarms to persist after device restart -->
+        <receiver
+            android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+        
+        <!-- Other application components -->
+        <!-- ... -->
+    </application>
+</manifest>
+
+<!-- iOS Info.plist Additions -->
+<!--
+<key>UIBackgroundModes</key>
+<array>
+    <string>audio</string>
+    <string>fetch</string>
+    <string>processing</string>
+</array>
+
+<key>NSPhotoLibraryUsageDescription</key>
+<string>We need access to your photo library to select videos for alarms.</string>
+-->
